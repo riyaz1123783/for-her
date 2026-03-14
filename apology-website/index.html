@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ===== CSS VARIABLES ===== */
+  :root {
+    --pink: #ffcce6;
+    --lavender: #e6ccff;
+    --cream: #fff6f9;
+    --rose: #ff99cc;
+    --deep-rose: #e0608a;
+    --text-dark: #5a3450;
+    --text-mid: #8a5e7a;
+    --glass-bg: rgba(255,255,255,0.25);
+    --glass-border: rgba(255,255,255,0.45);
+  }
+
+  /* ===== RESET & BASE ===== */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ===== ANIMATED BACKGROUND ===== */
+  #bg-gradient {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background: linear-gradient(135deg, #ffcce6, #e6ccff, #fff6f9, #ffb3d9, #d4b3ff);
+    background-size: 400% 400%;
+    animation: gradientShift 12s ease infinite;
+  }
+
+  @keyframes gradientShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* ===== FLOATING HEARTS LAYER ===== */
+  #hearts-layer {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .bg-heart {
+    position: absolute;
+    bottom: -60px;
+    font-size: 1.4rem;
+    opacity: 0;
+    animation: floatUp linear infinite;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  @keyframes floatUp {
+    0%   { opacity: 0; transform: translateY(0) scale(0.8) rotate(-10deg); }
+    15%  { opacity: 0.6; }
+    85%  { opacity: 0.4; }
+    100% { opacity: 0; transform: translateY(-110vh) scale(1.2) rotate(10deg); }
+  }
+
+  /* ===== MUSIC TOGGLE ===== */
+  #music-toggle {
+    position: fixed;
+    top: 16px;
+    right: 20px;
+    z-index: 1000;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1.5px solid var(--glass-border);
+    border-radius: 50px;
+    padding: 8px 18px;
+    font-size: 0.85rem;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-dark);
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(255,153,204,0.3);
+    transition: all 0.3s;
+  }
+  #music-toggle:hover {
+    background: rgba(255,153,204,0.3);
+    transform: scale(1.05);
+  }
+
+  /* ===== SECTIONS ===== */
+  section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 24px;
+    position: relative;
+  }
+
+  /* Fade-in on scroll */
+  .fade-section {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .fade-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== GLASS CARD ===== */
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1.5px solid var(--glass-border);
+    border-radius: 28px;
+    padding: 40px 36px;
+    box-shadow: 0 8px 40px rgba(255,153,204,0.2), 0 2px 12px rgba(180,100,180,0.1);
+    max-width: 680px;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* ===== HEADINGS ===== */
+  h1, h2, .script {
+    font-family: 'Dancing Script', cursive;
+  }
+
+  /* ===== SECTION 1 – INTRO ===== */
+  #intro {
+    min-height: 100vh;
+    text-align: center;
+  }
+
+  #intro .typing-container {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1.6rem, 5vw, 2.8rem);
+    color: var(--text-dark);
+    line-height: 1.8;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .typing-line {
+    opacity: 0;
+    animation: fadeWord 0.6s ease forwards;
+    display: block;
+  }
+
+  @keyframes fadeWord {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }}
+
+  /* Glowing CTA button */
+  .glow-btn {
+    margin-top: 48px;
+    padding: 16px 40px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: white;
+    background: linear-gradient(135deg, var(--rose), var(--deep-rose));
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255,99,163,0.5), 0 4px 20px rgba(255,99,163,0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glow-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+    border-radius: 50px;
+  }
+
+  .glow-btn:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 0 36px rgba(255,99,163,0.7), 0 8px 30px rgba(255,99,163,0.4);
+  }
+  .glow-btn:active { transform: scale(0.97); }
+
+  /* ===== VIDEO SECTIONS ===== */
+  .video-section .glass-card {
+    max-width: 420px;
+  }
+
+  #section4 .glass-card {
+    max-width: 340px;
+  }
+
+  video {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 18px;
+    box-shadow: 0 6px 30px rgba(200, 80, 160, 0.2);
+    background: #ffe0f0;
+    display: block;
+  }
+
+  video.ratio-916 {
+    aspect-ratio: 9 / 16;
+  }
+
+  .video-caption {
+    margin-top: 28px;
+    font-size: 1.05rem;
+    color: var(--text-mid);
+    font-weight: 300;
+    line-height: 1.8;
+  }
+
+  .video-caption em {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.3rem;
+    color: var(--deep-rose);
+    font-style: normal;
+  }
+
+  /* Video placeholder styling */
+  .video-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #ffd6ec, #e8c0f8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--text-mid);
+    font-size: 0.9rem;
+    border: 2px dashed rgba(255,153,204,0.5);
+  }
+  .video-placeholder .vp-icon { font-size: 3rem; }
+  .video-placeholder .vp-label {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.2rem;
+    color: var(--deep-rose);
+  }
+
+  /* ===== SECTION 5 – INTERACTIVE HEART ===== */
+  #heart-section {
+    gap: 32px;
+  }
+
+  #heart-section p.prompt {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    color: var(--text-mid);
+  }
+
+  #big-heart {
+    font-size: 120px;
+    cursor: pointer;
+    user-select: none;
+    filter: drop-shadow(0 0 20px rgba(255,80,130,0.6));
+    transition: transform 0.15s ease;
+    display: inline-block;
+    animation: heartFloat 3s ease-in-out infinite;
+  }
+
+  @keyframes heartFloat {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-12px); }
+  }
+
+  .heart-pulse {
+    animation: pulse 0.35s ease !important;
+  }
+  @keyframes pulse {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
+
+  #heart-msg {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    color: var(--deep-rose);
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    text-align: center;
+    max-width: 440px;
+    line-height: 1.6;
+  }
+
+  #tap-counter {
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    opacity: 0.7;
+  }
+
+  /* ===== SECTION 6 – FORGIVENESS METER ===== */
+  #game-section {
+    gap: 28px;
+  }
+
+  #game-area {
+    position: relative;
+    width: min(400px, 90vw);
+    height: 340px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid var(--glass-border);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(255,153,204,0.2);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .falling-heart {
+    position: absolute;
+    top: -40px;
+    font-size: 1.8rem;
+    cursor: pointer;
+    animation: fallDown linear forwards;
+    pointer-events: auto;
+    transition: transform 0.1s;
+  }
+  .falling-heart:hover { transform: scale(1.2); }
+
+  @keyframes fallDown {
+    from { top: -40px; opacity: 1; }
+    to   { top: 340px; opacity: 0.5; }
+  }
+
+  #meter-wrap {width: min(400px, 90vw);
+  }
+
+  #meter-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    margin-bottom: 8px;
+  }
+
+  #meter-track {
+    height: 20px;
+    border-radius: 50px;
+    background: rgba(255,200,220,0.4);
+    border: 1.5px solid rgba(255,153,204,0.4);
+    overflow: hidden;
+    position: relative;
+  }
+
+  #meter-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--rose), var(--deep-rose));
+    border-radius: 50px;
+    transition: width 0.4s ease;
+    box-shadow: 0 0 10px rgba(255,80,130,0.4);
+  }
+
+  #meter-fill.full {
+    animation: meterGlow 1.2s ease infinite alternate;
+  }
+
+  @keyframes meterGlow {
+    from { box-shadow: 0 0 10px rgba(255,80,130,0.4); }
+    to   { box-shadow: 0 0 28px rgba(255,80,130,0.9); }
+  }
+
+  #meter-complete {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.4rem;
+    color: var(--deep-rose);
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.8s;
+    max-width: 360px;
+  }
+
+  /* ===== SECTION 7 – FINAL MESSAGE ===== */
+  #final-msg {
+    text-align: center;
+  }
+
+  #final-msg .glass-card {
+    max-width: 520px;
+    padding: 56px 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    background: rgba(255,255,255,0.35);
+  }
+
+  .msg-block {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,153,204,0.18);
+  }
+
+  .msg-block:last-of-type { border-bottom: none; }
+
+  .msg-line {
+    font-size: 1rem;
+    color: var(--text-mid);
+    font-weight: 300;
+    line-height: 1.7;
+    text-align: center;
+    letter-spacing: 0.015em;
+    display: block;
+    width: 100%;
+  }
+
+  .msg-line.italic {
+    font-style: italic;
+    font-size: 0.92rem;
+    opacity: 0.85;
+  }
+
+  .msg-highlight {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    color: var(--deep-rose);
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .msg-dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--rose);
+    opacity: 0.6;
+    margin: 4px auto 0;
+  }
+
+  #final-msg .sorry-line {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(3rem, 10vw, 4.8rem);
+    color: var(--deep-rose);
+    margin-top: 32px;
+    display: block;
+    text-align: center;
+    filter: drop-shadow(0 0 16px rgba(255,80,130,0.45));
+    animation: sorryGlow 2.5s ease-in-out infinite alternate;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+  }
+
+  @keyframes sorryGlow {
+    from { filter: drop-shadow(0 0 10px rgba(255,80,130,0.3)); }
+    to   { filter: drop-shadow(0 0 28px rgba(255,80,130,0.75)); }
+  }
+
+  @media (max-width: 480px) {
+    #final-msg .glass-card { padding: 36px 24px; }
+    .msg-line { font-size: 0.92rem; }
+    .msg-highlight { font-size: 1.3rem; }
+  }
+
+  /* ===== SECTION 8 – CHOICE ===== */
+  #choice-section {
+    gap: 28px;
+    text-align: center;
+  }
+
+  .choice-btn {
+    padding: 14px 36px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .btn-yes {
+    background: linear-gradient(135deg, var(--rose), var(--deep-rose));
+    color: white;
+    box-shadow: 0 0 20px rgba(255,99,163,0.45);
+  }
+  .btn-yes:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 36px rgba(255,99,163,0.7);
+  }
+
+  .btn-mad {
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    border: 1.5px solid var(--glass-border);
+    color: var(--text-dark);
+    box-shadow: 0 4px 20px rgba(180,100,180,0.15);
+  }
+  .btn-mad:hover {
+    background: rgba(255,200,230,0.4);
+    transform: translateY(-2px);
+  }
+
+  #choice-response {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    color: var(--deep-rose);
+    min-height: 60px;
+    line-height: 1.8;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+    text-align: center;
+  }/* ===== FOOTER ===== */
+  footer {
+    text-align: center;
+    padding: 32px 20px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.1rem;
+    color: var(--text-mid);
+    opacity: 0.8;
+  }
+
+  /* ===== CONFETTI CANVAS ===== */
+  #confetti-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    pointer-events: none;
+  }
+
+  /* ===== BURST HEARTS ===== */
+  .burst-heart {
+    position: fixed;
+    font-size: 1.2rem;
+    pointer-events: none;
+    z-index: 900;
+    animation: burstFly 1s ease forwards;
+  }
+  @keyframes burstFly {
+    0%   { opacity: 1; transform: translate(0,0) scale(1); }
+    100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.4); }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 480px) {
+    .glass-card { padding: 28px 20px; }
+    #big-heart { font-size: 90px; }
+  }
+
+  /* ===== ANIMATED FLOWER & HEART DECORATIONS ===== */
+  .deco {
+    display: inline-block;
+    animation: decoSpin 3s ease-in-out infinite;
+    font-size: 1.5rem;
+    vertical-align: middle;
+    margin: 0 6px;
+  }
+  @keyframes decoSpin {
+    0%, 100% { transform: rotate(-8deg) scale(1); }
+    50%       { transform: rotate(8deg) scale(1.15); }
+  }
+
+  /* Drawing heart animation */
+  .draw-heart {
+    display: inline-block;
+    font-size: 1.4rem;
+    animation: drawPulse 1.6s ease-in-out infinite;
+    margin-left: 8px;
+  }
+  @keyframes drawPulse {
+    0%, 100% { opacity: 0.5; transform: scale(0.9); }
+    50%       { opacity: 1;   transform: scale(1.2); }
+  }
+
+  /* Section title */
+  .sec-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    color: var(--text-dark);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* game instructions */
+  .game-hint {
+    font-size: 0.82rem;
+    color: var(--text-mid);
+    opacity: 0.75;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== BACKGROUND ===== -->
+<div id="bg-gradient"></div>
+<div id="hearts-layer"></div>
+<canvas id="confetti-canvas"></canvas>
+
+<!-- ===== MUSIC ===== -->
+<!-- Replace music.mp3 with your piano track file -->
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<button id="music-toggle" onclick="toggleMusic()">Music On 🔊</button>
+
+<!-- ===================================================
+     SECTION 1 – INTRO
+====================================================== -->
+<section id="intro">
+  <div class="typing-container" id="typing-lines"></div>
+  <button class="glow-btn" id="intro-btn" onclick="handleIntroClick()" style="opacity:0;pointer-events:none;">
+    Click here if you're still a little mad at me 🌸
+  </button>
+</section>
+
+<!-- ===================================================
+     SECTION 2 – RABBIT VIDEO 1 (Protection)
+====================================================== -->
+<section class="video-section fade-section" id="section2">
+  <div class="glass-card">
+    <h2 class="sec-title">Even when it rains… 🌧️</h2>
+    <!-- Replace video1.mp4 with your file -->
+    <video controls id="vid1" preload="metadata" poster="">
+      <source src="video1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    
+    <div class="video-caption">
+      Even when things get messy…<br>
+      <em>I always want to be someone who protects your heart.</em>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     SECTION 3 – RABBIT VIDEO 2 (Connection)
+====================================================== -->
+<section class="video-section fade-section" id="section3">
+  <div class="glass-card" style="background:rgba(230,204,255,0.25);"><h2 class="sec-title">Through the fog… <span class="draw-heart">💜</span></h2>
+    <video controls id="vid2" class="ratio-916" preload="metadata">
+      <source src="video2.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    
+    <div class="video-caption">
+      Sometimes things get a little cloudy between us…<br>
+      <em>but deep down our hearts still understand each other.</em>
+      <span class="draw-heart">🩷</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     SECTION 4 – RABBIT VIDEO 3 (Apology)
+====================================================== -->
+<section class="video-section fade-section" id="section4">
+  <div class="glass-card">
+    <h2 class="sec-title">A little something for you… <span class="deco">🌸</span></h2>
+    <video controls id="vid3" class="ratio-916" preload="metadata">
+      <source src="video3.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+   
+    <div class="video-caption">
+      If I could right now…<br>
+      <em>I would give you a flower and tell you I'm sorry.</em>
+      <span class="deco">🌷</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================
+     SECTION 5 – INTERACTIVE HEART
+====================================================== -->
+<section id="heart-section" class="fade-section">
+  <p class="prompt">Tap the heart. 💓</p>
+  <div id="big-heart" onclick="tapHeart()">🩷</div>
+  <span id="tap-counter">0 / 7 taps</span>
+  <p id="heart-msg">No misunderstanding is bigger than what you mean to me.</p>
+</section>
+
+<!-- ===================================================
+     SECTION 6 – FORGIVENESS METER
+====================================================== -->
+<section id="game-section" class="fade-section">
+  <h2 class="sec-title">Help me refill the forgiveness meter 🫶</h2>
+  <p class="game-hint">Tap the falling hearts!</p>
+
+  <div id="game-area" onclick="handleGameAreaClick(event)"></div>
+
+  <div id="meter-wrap">
+    <div id="meter-label">
+      <span>Forgiveness Meter</span>
+      <span id="meter-percent">0%</span>
+    </div>
+    <div id="meter-track">
+      <div id="meter-fill"></div>
+    </div>
+  </div>
+
+  <p id="meter-complete">Your kindness is one of the reasons I love you so much. 💗</p>
+</section>
+
+<!-- ===================================================
+     SECTION 7 – FINAL MESSAGE
+====================================================== -->
+<section id="final-msg" class="fade-section">
+  <div class="glass-card">
+
+    <!-- Block 1: Honest confessions -->
+    <div class="msg-block">
+      <span class="msg-line">I may not always communicate perfectly.</span>
+      <span class="msg-line italic">Sometimes I get quiet when I should speak.</span>
+      <span class="msg-line italic">Sometimes I get frustrated when I should listen.</span>
+    </div>
+
+    <!-- Block 2: The truth -->
+    <div class="msg-block">
+      <span class="msg-highlight">But the truth is simple.</span>
+      <div class="msg-dot"></div>
+    </div>
+
+    <!-- Block 3: What matters -->
+    <div class="msg-block">
+      <span class="msg-line">You matter to me <strong>more than my pride.</strong></span>
+      <span class="msg-line">More than being right.</span>
+      <span class="msg-line">More than any misunderstanding.</span>
+    </div>
+
+    <!-- Sorry -->
+    <span class="sorry-line">I'm sorry my love. 🌸</span>
+
+  </div>
+</section>
+
+<!-- ===================================================
+     SECTION 8 – FINAL CHOICE====================================================== -->
+<section id="choice-section" class="fade-section">
+  <h2 class="sec-title">So… what do you say? 🥺</h2>
+  <div class="btn-row">
+    <button class="choice-btn btn-yes" onclick="choiceYes()">Okay… let's talk 💬</button>
+    <button class="choice-btn btn-mad" onclick="choiceMad()">I'm still mad 😤</button>
+  </div>
+  <p id="choice-response"></p>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>Made with love by someone who really cares about you. Your man 😚 💕</footer>
+
+<!-- ===================================================
+     JAVASCRIPT
+====================================================== -->
+<script>
+/* ===================================================
+   MUSIC SYSTEM
+=================================================== */
+const bgMusic = document.getElementById('bgMusic');
+let musicEnabled = false;
+let musicStarted = false;
+let videoPlaying = false;
+
+bgMusic.volume = 0;
+
+function toggleMusic() {
+  const btn = document.getElementById('music-toggle');
+  if (!musicStarted) return;
+  if (musicEnabled) {
+    fadeOutMusic();
+    musicEnabled = false;
+    btn.textContent = 'Music Off 🔇';
+  } else {
+    musicEnabled = true;
+    if (!videoPlaying) fadeInMusic();
+    btn.textContent = 'Music On 🔊';
+  }
+}
+
+function fadeInMusic() {
+  if (!musicEnabled) return;
+  bgMusic.play().catch(()=>{});
+  let v = bgMusic.volume;
+  const fade = setInterval(() => {
+    v = Math.min(v + 0.02, 0.25);
+    bgMusic.volume = v;
+    if (v >= 0.25) clearInterval(fade);
+  }, 80);
+}
+
+function fadeOutMusic() {
+  let v = bgMusic.volume;
+  const fade = setInterval(() => {
+    v = Math.max(v - 0.02, 0);
+    bgMusic.volume = v;
+    if (v <= 0) { bgMusic.pause(); clearInterval(fade); }
+  }, 80);
+}
+
+// Hook all videos
+['vid1','vid2','vid3'].forEach(id => {
+  const v = document.getElementById(id);
+  if (!v) return;
+  v.addEventListener('play', () => {
+    videoPlaying = true;
+    if (musicEnabled) fadeOutMusic();
+  });
+  v.addEventListener('pause', () => {
+    videoPlaying = false;
+    if (musicEnabled) fadeInMusic();
+  });
+  v.addEventListener('ended', () => {
+    videoPlaying = false;
+    if (musicEnabled) fadeInMusic();
+  });
+});
+
+// Show/hide video vs placeholder based on file availability
+function checkVideos() {
+  ['vid1','vid2','vid3'].forEach((id, i) => {
+    const vid = document.getElementById(id);
+    const ph  = document.getElementById('vp' + (i+1));
+    if (!vid || !ph) return;
+    vid.addEventListener('error', () => {
+      vid.style.display = 'none';
+      ph.style.display = 'flex';
+    });
+    vid.addEventListener('loadeddata', () => {
+      ph.style.display = 'none';
+      vid.style.display = 'block';
+    });
+    // Default: hide video, show placeholder; real check on load
+    vid.style.display = 'none';
+    // Try to load – if src is valid loadeddata fires
+    if (vid.readyState >= 2) {
+      ph.style.display = 'none';
+      vid.style.display = 'block';
+    }
+  });
+}
+checkVideos();
+
+/* ===================================================
+   FLOATING BACKGROUND HEARTS
+=================================================== */
+const heartsLayer = document.getElementById('hearts-layer');
+const heartChars = ['🩷','💕','💗','💖','💓','🌸','✨'];
+
+function spawnBgHeart() {
+  const el = document.createElement('span');
+  el.className = 'bg-heart';
+  el.textContent = heartChars[Math.floor(Math.random() * heartChars.length)];
+  el.style.left = Math.random() * 100 + 'vw';
+  el.style.fontSize = (0.9 + Math.random() * 1.2) + 'rem';
+  const dur = 8 + Math.random() * 10;
+  el.style.animationDuration = dur + 's';
+  el.style.animationDelay = Math.random() * 4 + 's';
+  heartsLayer.appendChild(el);
+  setTimeout(() => el.remove(), (dur + 4) * 1000);
+}
+
+setInterval(spawnBgHeart, 900);
+for (let i = 0; i < 8; i++) spawnBgHeart();
+
+/* ===================================================
+   SECTION 1 – TYPING INTRO
+=================================================== */
+const lines = [
+  'Hi love…',
+  'I know the last couple of days weren\'t the best.',
+  'Maybe I didn\'t communicate the way I should have.','So I made something small for you.'
+];
+
+const container = document.getElementById('typing-lines');
+const introBtn  = document.getElementById('intro-btn');
+
+function animateLines() {
+  lines.forEach((text, i) => {
+    const span = document.createElement('span');
+    span.className = 'typing-line';
+    span.textContent = text;
+    span.style.animationDelay = (i * 0.9) + 's';
+    container.appendChild(span);
+  });
+  setTimeout(() => {
+    introBtn.style.opacity = '1';
+    introBtn.style.pointerEvents = 'auto';
+    introBtn.style.transition = 'opacity 0.8s ease';
+  }, lines.length * 900 + 200);
+}
+
+window.addEventListener('load', animateLines);
+
+function handleIntroClick() {
+  // Start music
+  musicEnabled = true;
+  musicStarted = true;
+  document.getElementById('music-toggle').textContent = 'Music On 🔊';
+  fadeInMusic();
+
+  // Burst hearts
+  burstHearts(document.getElementById('intro-btn'), 12);
+
+  // Scroll to section 2
+  setTimeout(() => {
+    document.getElementById('section2').scrollIntoView({ behavior: 'smooth' });
+  }, 300);
+}
+
+/* ===================================================
+   SCROLL FADE-IN OBSERVER
+=================================================== */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.fade-section').forEach(s => observer.observe(s));
+
+/* ===================================================
+   SECTION 5 – INTERACTIVE HEART
+=================================================== */
+let tapCount = 0;
+const bigHeart   = document.getElementById('big-heart');
+const heartMsg   = document.getElementById('heart-msg');
+const tapCounter = document.getElementById('tap-counter');
+const heartScale = { val: 1 };
+
+function tapHeart() {
+  tapCount++;
+  tapCounter.textContent = tapCount + ' / 7 taps';
+
+  // Pulse animation
+  bigHeart.classList.remove('heart-pulse');
+  void bigHeart.offsetWidth; // reflow
+  bigHeart.classList.add('heart-pulse');
+
+  // Grow slightly
+  heartScale.val = Math.min(heartScale.val + 0.06, 2.0);
+  bigHeart.style.fontSize = (120 * heartScale.val) + 'px';
+
+  // Burst hearts
+  const rect = bigHeart.getBoundingClientRect();
+  const cx = rect.left + rect.width/2;
+  const cy = rect.top  + rect.height/2;
+  burstHearts({ getBoundingClientRect: () => ({ left: cx - 10, top: cy - 10, width: 20, height: 20 }) }, 6);
+
+  if (tapCount >= 7) {
+    heartMsg.style.opacity = '1';
+    tapCounter.style.opacity = '0';
+  }
+}
+
+// Double-click = explosion
+bigHeart.addEventListener('dblclick', () => {
+  burstHearts(bigHeart, 30);
+});
+
+/* ===================================================
+   SECTION 6 – FORGIVENESS METER GAME
+=================================================== */
+let meterValue  = 0;
+let gameRunning = true;
+let spawnInterval;
+
+function startGame() {
+  spawnInterval = setInterval(spawnFallingHeart, 1100);
+}
+
+function spawnFallingHeart() {
+  if (!gameRunning || meterValue >= 100) return;
+  const area = document.getElementById('game-area');
+  const heart = document.createElement('div');
+  heart.className = 'falling-heart';
+  heart.textContent = heartChars[Math.floor(Math.random() * 4)];
+  heart.style.left = (10 + Math.random() * 80) + '%';
+  const dur = 2.5 + Math.random() * 2;
+  heart.style.animationDuration = dur + 's';
+  heart.addEventListener('click', (e) => {
+    e.stopPropagation();
+    catchHeart(heart);
+  });
+  area.appendChild(heart);
+  setTimeout(() => { if (heart.parentNode) heart.remove(); }, dur * 1000);
+}
+
+function catchHeart(el) {
+  el.remove();
+  meterValue = Math.min(meterValue + 12, 100);
+  updateMeter();
+  burstHearts(el, 4);
+}
+
+function handleGameAreaClick(e) {
+  // Catch any heart by proximity (mobile tap area)
+  const hearts = document.querySelectorAll('.falling-heart');
+  hearts.forEach(h => {
+    const r = h.getBoundingClientRect();
+    const d = Math.hypot(e.clientX - (r.left + r.width/2), e.clientY - (r.top + r.height/2));
+    if (d < 50) catchHeart(h);
+  });
+}
+
+function updateMeter() {
+  const fill    = document.getElementById('meter-fill');
+  const pct     = document.getElementById('meter-percent');
+  const msg     = document.getElementById('meter-complete');
+  fill.style.width = meterValue + '%';
+  pct.textContent  = meterValue + '%';
+  if (meterValue >= 100) {
+    fill.classList.add('full');
+    msg.style.opacity = '1';
+    gameRunning = false;
+    clearInterval(spawnInterval);
+  }
+}
+
+// Start game when section enters view
+const gameObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && gameRunning && !spawnInterval) startGame();
+  });
+}, { threshold: 0.3 });
+
+gameObserver.observe(document.getElementById('game-section'));
+
+/* ===================================================
+   SECTION 8 – CHOICES
+=================================================== */
+function choiceYes() {
+  const resp = document.getElementById('choice-response');
+  resp.textContent = 'You just made my whole day. 💖';
+  resp.style.opacity = '1';
+  launchConfetti();
+  burstHearts(document.querySelector('.btn-yes'), 20);
+}
+
+function choiceMad() {
+  const resp = document.getElementById('choice-response');
+  resp.innerHTML = "That's okay. 🌸<br>I'll keep trying until I make you smile again.";
+  resp.style.opacity = '1';
+  burstHearts(document.querySelector('.btn-mad'), 10);
+}
+
+/* ===================================================
+   CONFETTI
+=================================================== */
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const ctx = canvas.getContext('2d');
+  const pieces = [];
+  const colors = ['#ff99cc','#e6ccff','#ffcce6','#ff66aa','#cc88ff','#ffaadd'];
+
+  for (let i = 0; i < 160; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: -20 - Math.random() * 200,
+      r: 5 + Math.random() * 7,
+      c: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - 0.5) * 5,
+      vy: 2 + Math.random() * 4,
+      rot: Math.random() * 360,
+      vr: (Math.random() - 0.5) * 8
+    });
+  }
+
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.fillStyle = p.c;
+      ctx.fillRect(-p.r/2, -p.r/2, p.r, p.r * 0.6);
+      ctx.restore();
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.vr;
+      p.vy += 0.05;
+    });
+    frame++;
+    if (frame < 200) requestAnimationFrame(draw);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  draw();
+}
+
+/* ===================================================
+   BURST HEARTS UTILITY
+=================================================== */
+function burstHearts(sourceEl, count) {
+  let cx, cy;
+  if (sourceEl && sourceEl.getBoundingClientRect) {
+    const r = sourceEl.getBoundingClientRect();
+    cx = r.left + r.width / 2;
+    cy = r.top  + r.height / 2;
+  } else {
+    cx = window.innerWidth / 2;
+    cy = window.innerHeight / 2;
+  }
+
+  for (let i = 0; i < count; i++) {
+    const h = document.createElement('span');
+    h.className = 'burst-heart';
+    h.textContent = heartChars[Math.floor(Math.random() * 4)];
+    const angle = Math.random() * 360;
+    const dist  = 60 + Math.random() * 100;
+    const tx = Math.cos(angle * Math.PI / 180) * dist;
+    const ty = Math.sin(angle * Math.PI / 180) * dist - 40;
+    h.style.left = (cx - 12) + 'px';
+    h.style.top  = (cy - 12) + 'px';
+    h.style.setProperty('--tx', tx + 'px');
+    h.style.setProperty('--ty', ty + 'px');
+    h.style.animationDelay = (Math.random() * 0.2) + 's';
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 1200);
+  }
+}
+
+/* ===================================================
+   EASTER EGGS
+=================================================== */
+// Press H → floating hearts
+document.addEventListener('keydown', e => {
+  if (e.key.toLowerCase() === 'h') {
+    for (let i = 0; i < 12; i++) spawnBgHeart();
+    burstHearts(null, 15);
+  }
+});// Click background → tiny hearts
+document.getElementById('bg-gradient').addEventListener('click', e => {
+  const el = { getBoundingClientRect: () => ({ left: e.clientX - 5, top: e.clientY - 5, width: 10, height: 10 }) };
+  burstHearts(el, 5);
+});
+
+// Double-click main heart → handled in tapHeart section above ✔
+</script>
+</body>
+</html>
